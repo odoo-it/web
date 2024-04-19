@@ -37,16 +37,18 @@ The notifications can bring interactivity with some buttons.
 
 The reload button is activated when sending the notification with:
 
-
-The action can be used using the ``action`` keyword:
+The action can be used using the ``action`` keyword and we can choose which name to
+give to our button with the ``button_name`` key in the action context `params` key:
 
 .. code-block:: python
 
-    action = self.env["ir.actions.act_window"]._for_xml_id('sale.action_orders')
-    action.update({
-        'res_id': self.id,
-        'views': [(False, 'form')],
-    })
+   action = self.env["ir.actions.act_window"]._for_xml_id('sale.action_orders')
+   action.update({
+      'res_id': self.id,
+      'views': [(False, 'form')],
+   })
+   action["context"].setdefault("params", {})
+   action["context"]["params"]["button_name"] = "Sales"
    self.env.user.notify_info('My information message', action=action)
 
 
